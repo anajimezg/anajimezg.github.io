@@ -99,7 +99,8 @@ def update_context(client: anthropic.Anthropic, context: dict) -> tuple[dict, bo
         "that should be appended or modified). "
         "Only suggest updates if genuinely needed. "
         "Never remove existing entries — only append. "
-        "Return only valid JSON, no markdown fences."
+        "Return ONLY a raw JSON object with no markdown fences, no extra text, no trailing commas. "
+        "The response must be parseable by Python's json.loads() directly."
     )
 
     response = client.messages.create(
@@ -116,7 +117,11 @@ def update_context(client: anthropic.Anthropic, context: dict) -> tuple[dict, bo
         ],
     )
 
-    result = parse_json_response(response.content[0].text)
+    try:
+        result = parse_json_response(response.content[0].text)
+    except Exception as e:
+        print(f"  → Context update skipped (JSON parse error): {e}")
+        return context, False
 
     if not result.get("should_update"):
         print("  → Context looks up to date. No changes needed.")

@@ -1,16 +1,16 @@
 {
-  "recommendation": "Write post #3, the ATS score panel update — it's the natural next beat in your Build in Public arc since you already promised a 'next version' in posts 1 and 2, and your audience is now primed for the follow-through. The feature is genuinely in progress, so you can show the real visual breakdown of how a CV matches a job description, which is concrete and demo-able rather than abstract. Just one heads-up: verify the feature is actually live before you publish, since some of that context is advisory rather than confirmed against your real code.",
+  "recommendation": "I'd write post 3, the ATS score panel, next — it's the natural follow-up to your tracker post and keeps your Build in Public arc moving while your audience is already invested in the JobMatch story. Frame it around the visual breakdown of how a CV matches a job description, since that's a tangible, screenshot-able feature people can immediately see the value of. Bonus: it ties straight back to your fit-score origin story, so it reinforces the through-line of the whole project.",
   "overdue": [],
   "context_was_updated": false,
   "draft": {
-    "text": "For weeks JobMatch told me a job was an 8 out of 10 fit. Helpful, but it never told me why.\n\nSo I built the ATS score panel. Now instead of a single number, I get a visual breakdown of how my CV actually matches the job description.\n\nIt shows me which keywords from the posting made it into my CV and which ones I quietly missed. The skills I thought were obvious but never spelled out. The phrasing a real applicant tracking system would be scanning for.\n\nThe first time I ran it on my own CV, I had a small reality check. I was describing a full Opera Cloud migration in language no machine would ever connect to the role I was applying for.\n\nThat is the part I keep relearning. The work was real. The translation was missing.\n\nThis pairs with the manual job description paste I kept on purpose. I only run roles I have actually chosen, and now the panel tells me how far my real experience is from how that role is written.\n\nIt is still rough. The keyword matching is simpler than I want, and I have a long list of things to refine before it feels finished.\n\nBut it does the one thing I needed when I started this whole project. It turns a vague feeling of not being good enough into something specific I can fix.",
+    "text": "When I started JobMatch, the whole thing was one number.\n\nYou paste a job description, and the app gives you a fit score out of 10 with reasoning. That was phase one, and honestly it was enough to make me feel less lost during my own search.\n\nBut a single number always bothered me. A 6 out of 10 tells you something is off. It doesn't tell you what.\n\nSo the feature I'm building now is an ATS score panel. Instead of just a number, it breaks down exactly how my CV lines up against the job description. Which keywords landed, which ones are missing, where the gaps are.\n\nIt turns a vague feeling into something I can actually fix before I hit apply.\n\nWhat I like is how it closes a loop. The project started with a fit score, and now I'm building the panel that explains that score. Same idea, just honest enough to show its work.\n\nComing from hospitality, this is the part that feels familiar. You don't get to guess whether a guest had a good stay. You look at the details and you adjust.\n\nI'm still surprised that the thing I built to help me find a job is the thing teaching me the most about building.",
     "hashtags": [
       "BuildInPublic",
-      "CareerTransition",
-      "JobSearch",
-      "Flask",
-      "AITools"
+      "CareerChange",
+      "HospitalityToTech",
+      "AItools",
+      "JobSearch"
     ],
-    "visual_prompt": "Screenshot of the ATS score panel showing a CV-to-job-description keyword breakdown with matched and missing terms highlighted."
+    "visual_prompt": "Screenshot of the JobMatch AI ATS score panel showing the keyword match breakdown with matched and missing keywords highlighted against a job description."
   }
 }
