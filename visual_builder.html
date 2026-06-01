@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ana Jimenez — LinkedIn Post Template</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0f0f0; font-family: -apple-system, sans-serif; padding: 40px 20px; }
+  h1 { font-size: 16px; font-weight: 500; color: #333; margin-bottom: 24px; }
+
+  .canvas {
+    width: 600px;
+    height: 600px;
+    background: #0F1C2E;
+    display: flex;
+    flex-direction: column;
+    padding: 48px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .author-name { font-family: Georgia, serif; color: #C9A96E; font-size: 13px; letter-spacing: 0.08em; margin-bottom: 24px; }
+  .post-title { font-family: Georgia, serif; color: #C9A96E; font-size: 28px; font-weight: 700; line-height: 1.25; margin-bottom: 20px; flex-shrink: 0; }
+  .divider { width: 48px; height: 1px; background: #C9A96E; margin-bottom: 20px; flex-shrink: 0; }
+
+  .content-area {
+    flex: 1; border-radius: 8px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; position: relative; padding: 32px;
+  }
+  .content-area.screenshot-mode { background: #1a2d42; border: 1px solid #2a3f58; padding: 0; }
+  .content-area.stat-mode { background: #162435; }
+  .content-area.quote-mode { background: #162435; border-left: 3px solid #C9A96E; border-radius: 0 8px 8px 0; align-items: flex-start; justify-content: center; }
+
+  .stat-context { font-family: Georgia, serif; color: #C9A96E; font-size: 15px; text-align: center; letter-spacing: 0.04em; margin-bottom: 12px; font-style: italic; }
+  .stat-equals { font-family: Georgia, serif; color: #4a6480; font-size: 28px; text-align: center; margin: 8px 0; }
+  .stat-number { font-family: Georgia, serif; color: #E8DFC8; font-size: 88px; font-weight: 700; line-height: 1; text-align: center; }
+  .stat-label { font-family: Georgia, serif; color: #C9A96E; font-size: 16px; text-align: center; letter-spacing: 0.05em; margin-top: 10px; }
+  .quote-text { font-family: Georgia, serif; color: #E8DFC8; font-size: 22px; line-height: 1.5; font-style: italic; }
+  .placeholder-text { text-align: center; color: #4a6480; font-size: 13px; }
+
+  .footer { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .footer-tag { font-family: Georgia, serif; color: #E8DFC8; font-size: 13px; opacity: 0.7; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #C9A96E; display: flex; align-items: center; justify-content: center; }
+  .avatar span { color: #C9A96E; font-size: 11px; font-family: Georgia, serif; font-weight: 700; }
+
+  .controls { width: 600px; background: white; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .controls h2 { font-size: 14px; font-weight: 500; color: #333; margin-bottom: 4px; }
+  .control-row { display: flex; gap: 10px; align-items: center; }
+  .control-row label { font-size: 13px; color: #666; min-width: 80px; }
+  .control-row input[type="text"], .control-row textarea {
+    flex: 1; font-size: 13px; padding: 7px 10px; border-radius: 6px;
+    border: 1px solid #ddd; font-family: -apple-system, sans-serif; resize: none; color: #222;
+  }
+  .control-row textarea { height: 60px; }
+  .mode-row { display: flex; gap: 8px; }
+  .mode-btn {
+    font-size: 13px; padding: 6px 16px; border-radius: 6px;
+    border: 1px solid #ddd; background: white; color: #666;
+    cursor: pointer; font-family: -apple-system, sans-serif;
+  }
+  .mode-btn.active { background: #0F1C2E; color: #C9A96E; border-color: #0F1C2E; }
+  .mode-btn:hover { background: #f5f5f5; }
+  .mode-btn.active:hover { background: #0F1C2E; }
+  .dynamic-fields { display: flex; flex-direction: column; gap: 12px; }
+  .upload-btn {
+    font-size: 13px; padding: 7px 16px; border-radius: 6px;
+    border: 1px solid #ddd; background: white; color: #333;
+    cursor: pointer; display: inline-block;
+  }
+  .upload-btn:hover { background: #f5f5f5; }
+  #img-upload { display: none; }
+  .apply-btn {
+    font-size: 13px; padding: 8px 20px; border-radius: 6px;
+    border: none; background: #0F1C2E; color: #C9A96E;
+    cursor: pointer; font-family: -apple-system, sans-serif; font-weight: 500;
+    align-self: flex-start;
+  }
+  .apply-btn:hover { background: #162435; }
+  .hint { font-size: 12px; color: #999; margin-top: 4px; line-height: 1.5; }
+  .section-label { font-size: 13px; color: #666; }
+  #uploadedImg { display:none; width:100%; height:100%; object-fit:cover; border-radius:8px; }
+</style>
+</head>
+<body>
+
+<h1>Ana Jimenez — LinkedIn Post Template</h1>
+
+<div class="canvas" id="postCanvas">
+  <div class="author-name">Ana Jimenez</div>
+  <div class="post-title" id="postTitle">Most hotels are paying for tools they barely use</div>
+  <div class="divider"></div>
+  <div class="content-area stat-mode" id="contentArea">
+    <div id="placeholder" class="placeholder-text" style="display:none;">Upload your screenshot</div>
+    <img id="uploadedImg" />
+    <div id="statContent" style="display:flex; flex-direction:column; align-items:center; width:100%;">
+      <div class="stat-context" id="statContext">fixed a broken workflow</div>
+      <div class="stat-equals">=</div>
+      <div class="stat-number" id="statNumber">750h</div>
+      <div class="stat-label" id="statLabel">saved per year</div>
+    </div>
+    <div id="quoteContent" style="display:none;">
+      <div class="quote-text" id="quoteText"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-tag" id="footerTag">Hospitality Tech · Automation</div>
+    <div class="avatar"><span>AJ</span></div>
+  </div>
+</div>
+
+<div class="controls">
+  <h2>Edit your post graphic</h2>
+
+  <div class="control-row">
+    <label>Title</label>
+    <input type="text" id="titleInput" value="Most hotels are paying for tools they barely use" />
+  </div>
+  <div class="control-row">
+    <label>Tag / topic</label>
+    <input type="text" id="tagInput" value="Hospitality Tech · Automation" />
+  </div>
+
+  <div class="section-label">Content mode</div>
+  <div class="mode-row">
+    <button class="mode-btn" onclick="setMode('screenshot')" id="btn-screenshot">Screenshot</button>
+    <button class="mode-btn active" onclick="setMode('stat')" id="btn-stat">Key stat</button>
+    <button class="mode-btn" onclick="setMode('quote')" id="btn-quote">Quote</button>
+  </div>
+
+  <div class="dynamic-fields">
+    <div id="fields-screenshot" style="display:none;">
+      <div class="control-row">
+        <label>Image</label>
+        <label class="upload-btn" for="img-upload">Upload screenshot</label>
+        <input type="file" id="img-upload" accept="image/*" />
+      </div>
+    </div>
+    <div id="fields-stat" style="display:flex; flex-direction:column; gap:12px;">
+      <div class="control-row">
+        <label>Context</label>
+        <input type="text" id="statContextInput" value="fixed a broken workflow" />
+      </div>
+      <div class="control-row">
+        <label>Number</label>
+        <input type="text" id="statNumInput" value="750h" />
+      </div>
+      <div class="control-row">
+        <label>Label</label>
+        <input type="text" id="statLabelInput" value="saved per year" />
+      </div>
+    </div>
+    <div id="fields-quote" style="display:none;">
+      <div class="control-row">
+        <label>Quote</label>
+        <textarea id="quoteInput" placeholder="Your pull quote here"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <button class="apply-btn" onclick="applyChanges()">Apply changes</button>
+
+  <p class="hint">
+    To save the graphic: take a screenshot of just the dark 600×600 square above.<br>
+    On Mac: Cmd + Shift + 4 and drag to select it.<br>
+    On Windows: Win + Shift + S and drag to select it.<br>
+    Or right-click the graphic and use browser print/screenshot tools.
+  </p>
+</div>
+
+<script>
+var currentMode = 'stat';
+
+function setMode(mode) {
+  currentMode = mode;
+  ['screenshot','stat','quote'].forEach(function(m) {
+    document.getElementById('btn-' + m).classList.toggle('active', m === mode);
+    var el = document.getElementById('fields-' + m);
+    el.style.display = m === mode ? (m === 'stat' ? 'flex' : 'block') : 'none';
+  });
+  var area = document.getElementById('contentArea');
+  area.className = 'content-area ' + mode + '-mode';
+  if (mode === 'quote') {
+    area.style.alignItems = 'flex-start';
+    area.style.justifyContent = 'center';
+    area.style.padding = '32px';
+  } else {
+    area.style.alignItems = 'center';
+    area.style.justifyContent = 'center';
+    area.style.padding = mode === 'screenshot' ? '0' : '32px';
+  }
+  document.getElementById('placeholder').style.display = mode === 'screenshot' ? 'block' : 'none';
+  document.getElementById('uploadedImg').style.display = 'none';
+  document.getElementById('statContent').style.display = mode === 'stat' ? 'flex' : 'none';
+  document.getElementById('quoteContent').style.display = mode === 'quote' ? 'block' : 'none';
+}
+
+function applyChanges() {
+  var title = document.getElementById('titleInput').value;
+  var tag = document.getElementById('tagInput').value;
+  if (title) document.getElementById('postTitle').textContent = title;
+  document.getElementById('footerTag').textContent = tag;
+  if (currentMode === 'stat') {
+    document.getElementById('statContext').textContent = document.getElementById('statContextInput').value;
+    document.getElementById('statNumber').textContent = document.getElementById('statNumInput').value;
+    document.getElementById('statLabel').textContent = document.getElementById('statLabelInput').value;
+  }
+  if (currentMode === 'quote') {
+    document.getElementById('quoteText').textContent = document.getElementById('quoteInput').value;
+  }
+}
+
+document.getElementById('img-upload').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var img = document.getElementById('uploadedImg');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    document.getElementById('placeholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>

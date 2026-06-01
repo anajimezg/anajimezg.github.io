@@ -17,18 +17,25 @@
   --white: #f9f7f3;
   --text: #2a2a2a;
   --text-light: #666;
-  --border: rgba(201,169,110,0.15);
+  --border: rgba(201,169,110,0.2);
+  /* warm editorial theme */
+  --page-bg: #F5F0E8;
+  --surface: #EDE8DC;
+  --modal-bg: #FAF7F2;
+  --muted: #7A6E5C;
+  --border-soft: rgba(0,0,0,0.08);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 14px; }
 body {
-  background: var(--navy);
-  color: var(--cream);
+  background: var(--page-bg);
+  color: var(--navy);
   font-family: 'Jost', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   min-height: 100vh;
 }
 header {
+  background: var(--navy);
   padding: 28px 40px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -55,39 +62,40 @@ header {
 .btn:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
 .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 500; }
 .btn-primary:hover { background: var(--cream); border-color: var(--cream); }
-.stats-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
-.stat { flex: 1; padding: 18px 24px; border-right: 1px solid var(--border); text-align: center; }
+.stats-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border-soft); }
+.stat { flex: 1; padding: 18px 24px; border-right: 1px solid var(--border-soft); text-align: center; }
 .stat:last-child { border-right: none; }
-.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-.stat-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #a07840; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #444; font-weight: 400; }
 .filters {
   padding: 16px 40px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-soft);
   align-items: center;
 }
-.filter-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); margin-right: 4px; }
+.filter-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #444; margin-right: 4px; }
 .filter-chip {
   font-family: 'Jost', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 5px 14px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(15,28,46,0.25);
   background: transparent;
-  color: var(--cream-muted);
+  color: #444;
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.18s;
 }
-.filter-chip:hover { border-color: var(--gold-muted); color: var(--cream); }
+.filter-chip:hover { border-color: var(--gold-muted); color: var(--navy); }
 .filter-chip.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.08); }
 .posts-container { padding: 32px 40px 60px; }
 .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .post-card {
-  background: var(--navy-mid);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
   padding: 22px 22px 18px;
   cursor: pointer;
   transition: all 0.2s;
@@ -106,22 +114,38 @@ header {
 .post-card:hover { border-color: var(--gold-muted); transform: translateY(-1px); }
 .post-card:hover::before { opacity: 1; }
 .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
-.card-num { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--gold); letter-spacing: 0.1em; opacity: 0.6; flex-shrink: 0; }
+.card-num { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: #4a4a4a; letter-spacing: 0.1em; flex-shrink: 0; }
 .status-badge { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 10px; flex-shrink: 0; }
-.status-published  { background: rgba(100,180,120,0.15); color: #7ecb97; border: 1px solid rgba(100,180,120,0.25); }
-.status-draft      { background: rgba(201,169,110,0.12); color: var(--gold); border: 1px solid var(--gold-muted); }
-.status-planned    { background: rgba(120,160,220,0.12); color: #a0bcde; border: 1px solid rgba(120,160,220,0.2); }
-.status-idea       { background: rgba(255,255,255,0.05); color: var(--cream-muted); border: 1px solid rgba(255,255,255,0.08); }
-.card-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--cream); line-height: 1.3; margin-bottom: 8px; }
-.card-hook { font-size: 12px; color: var(--cream-muted); line-height: 1.6; font-style: italic; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.card-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 12px; }
-.card-category { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
-.card-date { font-size: 11px; color: var(--cream-muted); opacity: 0.6; margin-left: auto; }
+.status-published  { background: rgba(80,150,100,0.12); color: #3d8a5e; border: 1px solid rgba(80,150,100,0.25); }
+.status-draft      { background: rgba(201,169,110,0.15); color: #9e7a3e; border: 1px solid var(--gold-muted); }
+.status-planned    { background: rgba(80,110,180,0.1); color: #5570a8; border: 1px solid rgba(80,110,180,0.2); }
+.status-idea       { background: rgba(0,0,0,0.04); color: var(--muted); border: 1px solid rgba(0,0,0,0.1); }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: #1a1a1a; line-height: 1.3; margin-bottom: 8px; }
+.card-hook { font-size: 12px; font-weight: 400; color: #444; line-height: 1.6; font-style: italic; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border-soft); padding-top: 12px; }
+.card-category { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: #2a2a2a; }
+.card-date { font-size: 11px; color: #555; margin-left: auto; }
 .card-stats { display: flex; gap: 12px; margin-top: 10px; }
-.card-stat-item { font-size: 11px; color: var(--cream-muted); display: flex; align-items: center; gap: 4px; }
+.card-stat-item { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
 .card-stat-item span { color: var(--gold); font-weight: 500; }
-.empty-state { grid-column: 1/-1; padding: 60px 24px; text-align: center; color: var(--cream-muted); }
+.empty-state { grid-column: 1/-1; padding: 60px 24px; text-align: center; color: var(--muted); }
 .empty-state p { font-size: 13px; opacity: 0.5; }
+.card-actions { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-soft); }
+.card-draft-btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #8a6a3a;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+}
+.card-draft-btn:hover { opacity: 1; }
+.card-draft-btn:disabled { opacity: 0.35; cursor: default; }
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -135,7 +159,7 @@ header {
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--navy-mid);
+  background: var(--modal-bg);
   border: 1px solid var(--border);
   width: 100%;
   max-width: 560px;
@@ -151,30 +175,159 @@ header {
 }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
 .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
-.modal-close { background: none; border: none; color: var(--cream-muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; transition: color 0.15s; }
-.modal-close:hover { color: var(--cream); }
+.modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; transition: color 0.15s; }
+.modal-close:hover { color: var(--navy); }
 .form-row { margin-bottom: 18px; }
-.form-label { display: block; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 6px; }
+.form-label { display: block; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .form-input, .form-select, .form-textarea {
   width: 100%;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  color: var(--cream);
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(0,0,0,0.12);
+  color: var(--navy);
   font-family: 'Jost', sans-serif;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   padding: 10px 14px;
   outline: none;
   transition: border-color 0.15s;
 }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold-muted); }
-.form-select option { background: var(--navy); }
+.form-select option { background: var(--modal-bg); }
 .form-textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
 .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
 .btn-danger { border-color: rgba(200,80,80,0.3); color: #e08080; }
 .btn-danger:hover { background: rgba(200,80,80,0.15); }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX(8px); }
+  60%     { transform: translateX(-6px); }
+  80%     { transform: translateX(6px); }
+}
+.insights-panel {
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--gold);
+}
+.insights-heading {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+.insights-recommendation { font-size: 13px; color: #1a1a1a; line-height: 1.75; }
+.insights-overdue { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+.insights-overdue-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e08080;
+  margin-bottom: 8px;
+}
+.insights-overdue-item { font-size: 12px; color: var(--muted); padding: 3px 0; }
+.insights-overdue-item::before { content: '— '; color: #e08080; opacity: 0.7; }
+.insights-refresh-note { margin-top: 12px; font-size: 11px; color: var(--gold); opacity: 0.55; letter-spacing: 0.06em; }
+.insights-empty { font-size: 12px; color: var(--muted); opacity: 0.5; font-style: italic; }
+.draft-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #8a6a3a;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.draft-link:hover { opacity: 0.65; }
+.draft-no-draft { margin-top: 14px; font-size: 11px; color: var(--muted); opacity: 0.45; font-style: italic; }
+.draft-body { font-size: 13px; color: var(--navy); line-height: 1.8; max-height: 60vh; overflow-y: auto; }
+.draft-body p { margin-bottom: 14px; }
+.draft-body p:last-child { margin-bottom: 0; }
+.draft-hashtags { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.draft-hashtags-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.draft-hashtag-chip { display: inline-block; font-size: 11px; color: var(--gold); border: 1px solid var(--gold-muted); padding: 3px 10px; margin: 2px 4px 2px 0; letter-spacing: 0.06em; }
+.draft-visual { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.draft-visual-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.draft-visual-text { font-size: 12px; color: var(--muted); line-height: 1.5; font-style: italic; margin-bottom: 10px; }
+.draft-source-badge { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; margin-left: 10px; vertical-align: middle; }
+.draft-source-saved { background: rgba(80,150,100,0.1); color: #3d8a5e; border: 1px solid rgba(80,150,100,0.2); }
+.draft-source-fresh { background: rgba(201,169,110,0.12); color: #9e7a3e; border: 1px solid var(--gold-muted); }
+.draft-saved-note { margin-top: 16px; font-size: 11px; color: var(--muted); font-style: italic; }
+.draft-regen-link { background: none; border: none; padding: 0; font-size: 11px; font-style: normal; color: #8a6a3a; cursor: pointer; font-family: 'Jost', sans-serif; font-weight: 400; }
+#authOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,28,46,0.97);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.auth-box {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  padding: 44px 40px 40px;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.auth-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+.auth-sub {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  margin-top: -6px;
+}
+.auth-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 12px 16px;
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.22em;
+  transition: border-color 0.15s;
+}
+.auth-input:focus { border-color: var(--gold-muted); }
+.auth-input.shake { animation: shake 0.4s ease; }
+.auth-btn {
+  width: 100%;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 11px 32px;
+  background: var(--gold);
+  color: var(--navy);
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.auth-btn:hover { background: var(--cream); border-color: var(--cream); }
 </style>
 </head>
 <body>
@@ -201,6 +354,7 @@ header {
 </div>
 
 <div class="posts-container">
+  <div class="insights-panel" id="insightsPanel"></div>
   <div class="posts-grid" id="postsGrid"></div>
 </div>
 
@@ -273,8 +427,32 @@ header {
   </div>
 </div>
 
+<div class="modal-overlay" id="draftOverlay" onclick="handleDraftOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Post Draft<span id="draftSourceBadge" class="draft-source-badge"></span></div>
+      <button class="modal-close" onclick="closeDraftModal()">×</button>
+    </div>
+    <div class="draft-body" id="draftBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="regenerateBtn" onclick="regenerateDraft()" style="display:none; margin-right:auto">Regenerate</button>
+      <button class="btn" onclick="closeDraftModal()">Close</button>
+      <button class="btn btn-primary" id="copyBtn" onclick="copyDraft()">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<div id="authOverlay">
+  <div class="auth-box">
+    <div class="auth-title">Ana Jiménez</div>
+    <div class="auth-sub">Content Studio</div>
+    <input class="auth-input" id="authInput" type="password" placeholder="Password" autocomplete="current-password" />
+    <button class="auth-btn" onclick="submitAuth()">Enter</button>
+  </div>
+</div>
+
 <script>
-const STORAGE_KEY = 'ana_linkedin_posts';
+const AUTH_PASSWORD = 'rOG23az1.';
 let posts = [];
 let editingId = null;
 let activeFilter = 'all';
@@ -292,16 +470,20 @@ const SEED = [
   { id: 10, topic: "Diageo / Teeling event — client success in live events", hook: "TBD", category: "Account Management", status: "Idea", date: "", likes: 0, comments: 0, reposts: 0, notes: "PowerPlay card, room inventory re-engineering." },
 ];
 
-function load() {
+async function load() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    posts = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(SEED));
+    const res = await fetch('/api/posts');
+    posts = res.ok ? await res.json() : JSON.parse(JSON.stringify(SEED));
   } catch { posts = JSON.parse(JSON.stringify(SEED)); }
   render();
 }
 
 function save() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); } catch {}
+  fetch('/api/posts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(posts)
+  }).catch(() => {});
 }
 
 function nextId() { return posts.length ? Math.max(...posts.map(p => p.id)) + 1 : 1; }
@@ -365,6 +547,9 @@ function render() {
         ${p.comments ? `<div class="card-stat-item">💬 <span>${p.comments}</span></div>` : ''}
         ${p.reposts  ? `<div class="card-stat-item">↺ <span>${p.reposts}</span></div>` : ''}
       </div>` : ''}
+      <div class="card-actions">
+        <button class="card-draft-btn" onclick="event.stopPropagation(); generateCardDraft(this, ${p.id})">Generate draft →</button>
+      </div>
     </div>
   `).join('');
 }
@@ -440,7 +625,238 @@ function deletePost() {
   render();
 }
 
-load();
+function checkAuth() {
+  if (localStorage.getItem('studio_auth') === AUTH_PASSWORD) return;
+  const overlay = document.getElementById('authOverlay');
+  overlay.style.display = 'flex';
+  document.getElementById('authInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitAuth();
+  });
+}
+
+function submitAuth() {
+  const input = document.getElementById('authInput');
+  if (input.value === AUTH_PASSWORD) {
+    localStorage.setItem('studio_auth', AUTH_PASSWORD);
+    document.getElementById('authOverlay').style.display = 'none';
+  } else {
+    input.classList.add('shake');
+    input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
+    input.value = '';
+    input.focus();
+  }
+}
+
+let agentDraft = null;
+let savedDrafts = {};
+let currentDraftPostId = null;
+
+async function loadInsights() {
+  const panel = document.getElementById('insightsPanel');
+  try {
+    const res = await fetch('/api/agent-output');
+    const data = res.ok ? await res.json() : { recommendation: null, overdue: [], context_was_updated: false };
+
+    agentDraft = data.draft || null;
+
+    let html = '<div class="insights-heading">Agent Insights</div>';
+
+    if (!data.recommendation && !data.overdue?.length) {
+      html += '<div class="insights-empty">Run python agent.py to generate insights</div>';
+    } else {
+      if (data.recommendation) {
+        html += `<div class="insights-recommendation">${data.recommendation}</div>`;
+      }
+      if (data.overdue?.length) {
+        html += '<div class="insights-overdue"><div class="insights-overdue-label">Overdue</div>';
+        data.overdue.forEach(t => { html += `<div class="insights-overdue-item">${t}</div>`; });
+        html += '</div>';
+      }
+      if (data.context_was_updated) {
+        html += '<div class="insights-refresh-note">Context refreshed this run</div>';
+      }
+      if (agentDraft?.text) {
+        html += '<button class="draft-link" onclick="openAgentDraftModal()">View draft →</button>';
+      } else {
+        html += '<div class="draft-no-draft">Run python agent.py to generate a draft</div>';
+      }
+    }
+
+    panel.innerHTML = html;
+  } catch {}
+}
+
+function openAgentDraftModal() {
+  currentDraftPostId = null;
+  openDraftModal(false);
+}
+
+function openDraftModal(fromCache = false) {
+  const badge = document.getElementById('draftSourceBadge');
+  if (fromCache) {
+    badge.textContent = 'Saved draft';
+    badge.className = 'draft-source-badge draft-source-saved';
+  } else if (currentDraftPostId) {
+    badge.textContent = 'Fresh draft';
+    badge.className = 'draft-source-badge draft-source-fresh';
+  } else {
+    badge.textContent = '';
+    badge.className = 'draft-source-badge';
+  }
+
+  document.getElementById('regenerateBtn').style.display = currentDraftPostId ? 'block' : 'none';
+  document.getElementById('copyBtn').textContent = 'Copy to clipboard';
+
+  renderDraftBody(fromCache);
+  document.getElementById('draftOverlay').classList.add('open');
+}
+
+function renderDraftBody(fromCache = false) {
+  const body = document.getElementById('draftBody');
+
+  if (!agentDraft?.text) {
+    body.innerHTML = '<p style="opacity:0.4;font-style:italic">Run python agent.py to generate a draft</p>';
+    return;
+  }
+
+  const { text, hashtags = [], visual_prompt = '' } = agentDraft;
+  let html = text.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+
+  if (fromCache) {
+    html += '<p class="draft-saved-note">Saved draft — <button class="draft-regen-link" onclick="regenerateDraft()">Regenerate →</button></p>';
+  }
+
+  if (hashtags.length) {
+    html += '<div class="draft-hashtags">';
+    html += '<div class="draft-hashtags-label">Suggested hashtags</div>';
+    html += hashtags.map(h => `<span class="draft-hashtag-chip">#${h}</span>`).join('');
+    html += '</div>';
+  }
+
+  if (visual_prompt) {
+    html += '<div class="draft-visual">';
+    html += '<div class="draft-visual-label">Visual suggestion</div>';
+    html += `<div class="draft-visual-text">${visual_prompt}</div>`;
+    html += '<a href="http://localhost:5001/visual-builder" target="_blank" class="btn">Open Visual Builder</a>';
+    html += '</div>';
+  }
+
+  body.innerHTML = html;
+}
+
+async function regenerateDraft() {
+  if (!currentDraftPostId) return;
+  const post = posts.find(p => p.id === currentDraftPostId);
+  if (!post) return;
+
+  const btn = document.getElementById('regenerateBtn');
+  btn.textContent = 'Regenerating...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/generate-draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id:       post.id,
+        topic:    post.topic,
+        hook:     post.hook !== 'TBD' ? (post.hook || '') : '',
+        category: post.category || '',
+        notes:    post.notes    || '',
+      }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload.error) throw new Error(payload.error || `HTTP ${res.status}`);
+    agentDraft = payload;
+    savedDrafts[String(currentDraftPostId)] = payload;
+    const badge = document.getElementById('draftSourceBadge');
+    badge.textContent = 'Fresh draft';
+    badge.className = 'draft-source-badge draft-source-fresh';
+    renderDraftBody(false);
+  } catch (err) {
+    console.error('regenerate error:', err);
+  } finally {
+    btn.textContent = 'Regenerate';
+    btn.disabled = false;
+  }
+}
+
+function closeDraftModal() {
+  document.getElementById('draftOverlay').classList.remove('open');
+}
+
+function handleDraftOverlayClick(e) {
+  if (e.target === document.getElementById('draftOverlay')) closeDraftModal();
+}
+
+async function copyDraft() {
+  if (!agentDraft?.text) return;
+  const { text, hashtags = [] } = agentDraft;
+  const hashtagLine = hashtags.length ? '\n\n' + hashtags.map(h => `#${h}`).join(' ') : '';
+  await navigator.clipboard.writeText(text + hashtagLine);
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = 'Copied!';
+  setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2000);
+}
+
+async function generateCardDraft(btn, postId) {
+  const post = posts.find(p => p.id === postId);
+  if (!post) return;
+
+  // Serve from cache immediately if available
+  if (savedDrafts[String(postId)]) {
+    agentDraft = savedDrafts[String(postId)];
+    currentDraftPostId = postId;
+    openDraftModal(true); // true = from cache
+    return;
+  }
+
+  btn.textContent = 'Generating...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/generate-draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id:       post.id,
+        topic:    post.topic,
+        hook:     post.hook !== 'TBD' ? (post.hook || '') : '',
+        category: post.category || '',
+        notes:    post.notes    || '',
+      }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload.error) throw new Error(payload.error || `HTTP ${res.status}`);
+    agentDraft = payload;
+    savedDrafts[String(postId)] = payload;
+    currentDraftPostId = postId;
+    openDraftModal(false); // false = fresh from API
+    btn.textContent = 'Generate draft →';
+    btn.disabled = false;
+  } catch (err) {
+    console.error('generate-draft error:', err);
+    btn.textContent = 'Error — retry';
+    setTimeout(() => {
+      btn.textContent = 'Generate draft →';
+      btn.disabled = false;
+    }, 2000);
+  }
+}
+
+async function loadDrafts() {
+  try {
+    const res = await fetch('/api/drafts');
+    if (res.ok) savedDrafts = await res.json();
+  } catch {}
+}
+
+checkAuth();
+(async () => {
+  await loadDrafts();
+  await load();
+  loadInsights();
+})();
 </script>
 </body>
 </html>

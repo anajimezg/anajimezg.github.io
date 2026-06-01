@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "topic": "I automated my job search twice",
+    "hook": "I automated my job search twice.",
+    "category": "Build in Public",
+    "status": "Published",
+    "date": "2026-05-22",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "Make.com + Gemini vs Flask + Claude. Option A storytelling version."
+  },
+  {
+    "id": 2,
+    "topic": "Tracker live + the scraping wall story",
+    "hook": "Last week I said the next version of JobMatch would have pipeline tracking...",
+    "category": "Build in Public",
+    "status": "Published",
+    "date": "2026-05-29",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "Follow-up to post 1. LinkedIn & Indeed blocked scraping — manual step is the point."
+  },
+  {
+    "id": 3,
+    "topic": "ATS score panel update",
+    "hook": "TBD — write once feature is live",
+    "category": "Build in Public",
+    "status": "Planned",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "Next up. Feature in progress."
+  },
+  {
+    "id": 4,
+    "topic": "Transition story — slow build, not a lightning bolt",
+    "hook": "There wasn't a single moment. It was more of a slow feeling that kept getting louder.",
+    "category": "Personal Narrative",
+    "status": "Draft",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": ""
+  },
+  {
+    "id": 5,
+    "topic": "Hotels paying for tools they barely use",
+    "hook": "Most hotels are paying for tools they barely use.",
+    "category": "Hospitality Tech",
+    "status": "Draft",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "750 hours saved, zero extra cost angle."
+  },
+  {
+    "id": 6,
+    "topic": "Built my own content tool without being a developer",
+    "hook": "The barrier to building things has dropped. The barrier to knowing what to build hasn't.",
+    "category": "AI / No-Code",
+    "status": "Draft",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": ""
+  },
+  {
+    "id": 7,
+    "topic": "Opera Cloud migration / leading a team of 18",
+    "hook": "TBD",
+    "category": "Achievement Spotlight",
+    "status": "Idea",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "Full migration, team of 18, Microsoft €1M moment."
+  },
+  {
+    "id": 8,
+    "topic": "What hospitality taught me about customer success",
+    "hook": "TBD",
+    "category": "Industry Insight",
+    "status": "Idea",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "Ops, relationships, zero margin for error."
+  },
+  {
+    "id": 9,
+    "topic": "NotiFlow / EmPushy — building CS from scratch at a startup",
+    "hook": "TBD",
+    "category": "Personal Narrative",
+    "status": "Idea",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": ""
+  },
+  {
+    "id": 10,
+    "topic": "Diageo / Teeling event — client success in live events",
+    "hook": "TBD",
+    "category": "Account Management",
+    "status": "Idea",
+    "date": "",
+    "likes": 0,
+    "comments": 0,
+    "reposts": 0,
+    "notes": "PowerPlay card, room inventory re-engineering."
+  }
+]

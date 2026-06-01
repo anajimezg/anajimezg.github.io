@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ana Jimenez — LinkedIn Post Template</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e8e4db; font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 40px 20px; }
+  h1 { font-size: 14px; font-weight: 500; color: #555; margin-bottom: 24px; letter-spacing: 0.05em; }
+
+  .canvas {
+    width: 600px;
+    height: 600px;
+    background: #0F1C2E;
+    display: flex;
+    flex-direction: column;
+    padding: 48px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+  .post-title {
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: #C9A96E;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+  .content-area {
+    flex: 1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+  }
+  .content-area.screenshot-mode {
+    background: #1a2d42;
+    border: 1px solid #2a3f58;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .content-area.stat-mode {
+    background: #162435;
+    padding: 32px;
+    gap: 8px;
+  }
+  .content-area.quote-mode {
+    background: #162435;
+    border-left: 3px solid #C9A96E;
+    border-radius: 0 8px 8px 0;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  /* Screenshot mode image */
+  #uploadedImg {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+  #placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    color: #4a6080;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  #placeholder svg { opacity: 0.4; }
+
+  /* Stat mode */
+  .stat-context {
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0.06em;
+    font-style: italic;
+  }
+  .stat-number {
+    font-family: Georgia, serif;
+    color: #E8DFC8;
+    font-size: 88px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+  }
+  .stat-label {
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* Quote mode */
+  .quote-mark {
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 64px;
+    line-height: 0.6;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+  .quote-text {
+    font-family: Georgia, serif;
+    color: #E8DFC8;
+    font-size: 20px;
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  /* Footer bar */
+  .footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-shrink: 0;
+  }
+  .footer-tag {
+    font-family: Georgia, serif;
+    color: rgba(201,169,110,0.6);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .footer-initials {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    color: #C9A96E;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Controls panel */
+  .controls {
+    width: 600px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .controls-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .control-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .control-row label {
+    font-size: 12px;
+    color: #666;
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .control-row input[type="text"],
+  .control-row textarea {
+    flex: 1;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: #333;
+    font-family: inherit;
+    outline: none;
+  }
+  .control-row input[type="text"]:focus,
+  .control-row textarea:focus {
+    border-color: #C9A96E;
+  }
+  .control-row textarea {
+    resize: vertical;
+    min-height: 64px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 20px 0 12px;
+  }
+  .mode-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .mode-btn {
+    padding: 7px 16px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .mode-btn:hover { border-color: #C9A96E; color: #C9A96E; }
+  .mode-btn.active { background: #0F1C2E; border-color: #0F1C2E; color: #C9A96E; }
+
+  .upload-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    font-size: 12px;
+    border: 1px dashed #C9A96E;
+    border-radius: 3px;
+    color: #C9A96E;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .upload-btn:hover { background: rgba(201,169,110,0.08); }
+  input[type="file"] { display: none; }
+
+  .dynamic-fields { margin-bottom: 4px; }
+
+  .apply-btn {
+    width: 100%;
+    padding: 10px;
+    background: #0F1C2E;
+    color: #C9A96E;
+    border: none;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: Georgia, serif;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.15s;
+  }
+  .apply-btn:hover { opacity: 0.85; }
+
+  .hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 14px;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<h1>Ana Jimenez — LinkedIn Post Template</h1>
+
+<!-- THE GRAPHIC -->
+<div class="canvas" id="canvas">
+  <div class="author-name">Ana Jimenez</div>
+  <div class="post-title" id="postTitle">I automated my job search twice</div>
+  <div class="divider"></div>
+
+  <div class="content-area screenshot-mode" id="contentArea">
+    <div id="placeholder">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4a6080" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      Upload screenshot
+    </div>
+    <img id="uploadedImg" alt="uploaded" />
+
+    <!-- stat content (hidden by default) -->
+    <div id="statContent" style="display:none; flex-direction:column; align-items:center; gap:8px; width:100%;">
+      <div class="stat-context" id="statContext">fixed a broken workflow</div>
+      <div class="stat-number" id="statNumber">750h</div>
+      <div class="stat-label" id="statLabel">saved per year</div>
+    </div>
+
+    <!-- quote content (hidden by default) -->
+    <div id="quoteContent" style="display:none;">
+      <div class="quote-mark">"</div>
+      <div class="quote-text" id="quoteText">The automation does the heavy lifting. The judgment is still mine.</div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="footer-tag" id="footerTag">Job Search · AI · Automation</div>
+    <div class="footer-initials">AJ</div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="controls-title">Edit your post graphic</div>
+
+  <div class="control-row">
+    <label>Title</label>
+    <input type="text" id="titleInput" value="I automated my job search twice" />
+  </div>
+  <div class="control-row">
+    <label>Tag / topic</label>
+    <input type="text" id="tagInput" value="Job Search · AI · Automation" />
+  </div>
+
+  <div class="section-label">Content mode</div>
+  <div class="mode-row">
+    <button class="mode-btn active" onclick="setMode('screenshot')" id="btn-screenshot">Screenshot</button>
+    <button class="mode-btn" onclick="setMode('stat')" id="btn-stat">Key stat</button>
+    <button class="mode-btn" onclick="setMode('quote')" id="btn-quote">Quote</button>
+  </div>
+
+  <div class="dynamic-fields">
+    <div id="fields-screenshot">
+      <div class="control-row">
+        <label>Image</label>
+        <label class="upload-btn" for="img-upload">Upload screenshot</label>
+        <input type="file" id="img-upload" accept="image/*" />
+      </div>
+    </div>
+    <div id="fields-stat" style="display:none; flex-direction:column; gap:12px;">
+      <div class="control-row">
+        <label>Context</label>
+        <input type="text" id="statContextInput" value="fixed a broken workflow" />
+      </div>
+      <div class="control-row">
+        <label>Number</label>
+        <input type="text" id="statNumInput" value="750h" />
+      </div>
+      <div class="control-row">
+        <label>Label</label>
+        <input type="text" id="statLabelInput" value="saved per year" />
+      </div>
+    </div>
+    <div id="fields-quote" style="display:none;">
+      <div class="control-row">
+        <label>Quote</label>
+        <textarea id="quoteInput">The automation does the heavy lifting. The judgment is still mine.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <button class="apply-btn" onclick="applyChanges()">Apply changes</button>
+
+  <p class="hint">
+    To save the graphic: screenshot just the dark 600×600 square above.<br>
+    Windows: Win + Shift + S and drag to select it.<br>
+    Mac: Cmd + Shift + 4 and drag to select it.
+  </p>
+</div>
+
+<script>
+var currentMode = 'screenshot';
+
+function setMode(mode) {
+  currentMode = mode;
+  ['screenshot','stat','quote'].forEach(function(m) {
+    document.getElementById('btn-' + m).classList.toggle('active', m === mode);
+    var f = document.getElementById('fields-' + m);
+    f.style.display = m === mode ? (m === 'stat' ? 'flex' : 'block') : 'none';
+  });
+
+  var area = document.getElementById('contentArea');
+  // Reset
+  area.className = 'content-area';
+  area.style.cssText = '';
+
+  if (mode === 'screenshot') {
+    area.classList.add('screenshot-mode');
+    document.getElementById('placeholder').style.display = document.getElementById('uploadedImg').src ? 'none' : 'flex';
+  } else if (mode === 'stat') {
+    area.classList.add('stat-mode');
+    document.getElementById('placeholder').style.display = 'none';
+  } else if (mode === 'quote') {
+    area.classList.add('quote-mode');
+    document.getElementById('placeholder').style.display = 'none';
+  }
+
+  document.getElementById('uploadedImg').style.display = (mode === 'screenshot' && document.getElementById('uploadedImg').getAttribute('data-loaded')) ? 'block' : 'none';
+  document.getElementById('statContent').style.display = mode === 'stat' ? 'flex' : 'none';
+  document.getElementById('quoteContent').style.display = mode === 'quote' ? 'block' : 'none';
+}
+
+function applyChanges() {
+  var title = document.getElementById('titleInput').value;
+  var tag = document.getElementById('tagInput').value;
+  if (title) document.getElementById('postTitle').textContent = title;
+  if (tag) document.getElementById('footerTag').textContent = tag;
+
+  if (currentMode === 'stat') {
+    document.getElementById('statContext').textContent = document.getElementById('statContextInput').value;
+    document.getElementById('statNumber').textContent = document.getElementById('statNumInput').value;
+    document.getElementById('statLabel').textContent = document.getElementById('statLabelInput').value;
+  }
+  if (currentMode === 'quote') {
+    document.getElementById('quoteText').textContent = document.getElementById('quoteInput').value;
+  }
+}
+
+document.getElementById('img-upload').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var img = document.getElementById('uploadedImg');
+    img.src = ev.target.result;
+    img.setAttribute('data-loaded', '1');
+    img.style.display = 'block';
+    document.getElementById('placeholder').style.display = 'none';
+    // Ensure screenshot mode is active
+    if (currentMode !== 'screenshot') setMode('screenshot');
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>

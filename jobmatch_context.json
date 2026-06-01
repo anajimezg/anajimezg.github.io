@@ -1,0 +1,65 @@
+{
+  "project": "JobMatch AI",
+  "description": "A Flask web app that generates tailored CVs and cover letters using the Anthropic API. Built by Ana during her job search as a way to learn while solving a real problem.",
+  "stack": [
+    "Python",
+    "Flask",
+    "Anthropic API",
+    "ReportLab",
+    "SQLite",
+    "BeautifulSoup4"
+  ],
+  "phases": {
+    "phase_1": "Paste job description, get fit score out of 10 with reasoning, generate tailored CV and cover letter as PDF download",
+    "phase_2": "Automated job discovery — attempted LinkedIn and Indeed scraping, both blocked. Parked. Manual JD pasting is the core value.",
+    "phase_3": "One-click application pack with editable web interface before download",
+    "phase_4": "Application tracker — SQLite, status pipeline (Documents Generated, Applied, Interview Scheduled, Offer Received, Rejected, No Response), auto-logging, follow-up email generator"
+  },
+  "in_progress": [
+    "ATS score panel — visual breakdown of how well the CV matches the job description",
+    "Review API key handling and ensure secrets are loaded from environment, not hardcoded"
+  ],
+  "learnings": [
+    "LinkedIn and Indeed block scraping — manual step is intentional product decision",
+    "Flask download_name parameter replaces deprecated attachment_filename",
+    "anthropic must be installed via --prefer-binary to avoid Rust/tokenizers compilation errors",
+    "The manual JD paste step creates deliberate friction — you only apply to roles you've chosen carefully",
+    "Consider using Anthropic's latest model identifiers and pinning a model version string in config to avoid breakage when default models are deprecated",
+    "Flask file downloads should use send_file with download_name; for larger PDF generation consider streaming responses to avoid memory spikes",
+    "SQLite is fine for single-user local tracking, but if deploying to a multi-user or hosted environment, plan a migration path to PostgreSQL since SQLite handles concurrent writes poorly",
+    "ReportLab PDF generation can be slow for complex layouts — consider caching generated documents keyed by job description hash to avoid regenerating identical packs",
+    "Store the Anthropic API key in environment variables (e.g. via python-dotenv) rather than in code, and handle rate-limit / 429 errors gracefully with retries and backoff"
+  ],
+  "recent_decisions": [
+    "Parked automated job discovery in favour of manual JD pasting",
+    "Added company name to CV download filename",
+    "Built follow-up email generator into the tracker",
+    "Flagged need to pin Anthropic model version and add error handling for API rate limits"
+  ],
+  "update_log": [
+    {
+      "note": "Appended general-knowledge suggestions: pin Anthropic model versions, secure API key via env vars, add rate-limit handling, consider PDF caching and a Postgres migration path if multi-user deployment is planned. No existing entries removed.",
+      "context": "Updates are advisory based on common Flask/Python LLM-app evolution patterns; verify against the actual codebase before acting."
+    },
+    {
+      "timestamp": "2026-06-01T15:15:51.893881+00:00",
+      "source": "agent.py auto-update",
+      "changes": [
+        "learnings",
+        "in_progress",
+        "recent_decisions",
+        "update_log"
+      ]
+    },
+    {
+      "timestamp": "2026-06-01T18:35:24.085336+00:00",
+      "source": "update_context.py manual",
+      "note": "what I just built"
+    },
+    {
+      "timestamp": "2026-06-01T18:36:02.136881+00:00",
+      "source": "update_context.py manual",
+      "note": "Built the Content Studio — a Flask web app at localhost:5001 with a LinkedIn post tracker, AI agent that generates post recommendations and drafts daily at 8am, draft persistence in drafts.json, and a run_studio.bat to launch everything in one click"
+    }
+  ]
+}
