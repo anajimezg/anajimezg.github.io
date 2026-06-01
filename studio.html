@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Studio — Ana Jiménez</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F1C2E;
+  --navy-mid: #162435;
+  --navy-light: #1e3050;
+  --gold: #C9A96E;
+  --gold-muted: rgba(201,169,110,0.3);
+  --cream: #E8DFC8;
+  --cream-muted: #c4b89a;
+  --white: #f9f7f3;
+  --text: #2a2a2a;
+  --text-light: #666;
+  --border: rgba(201,169,110,0.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+}
+header {
+  padding: 28px 40px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { display: flex; flex-direction: column; gap: 4px; }
+.brand-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); letter-spacing: 0.06em; }
+.brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream-muted); }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border: 1px solid var(--gold-muted);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 500; }
+.btn-primary:hover { background: var(--cream); border-color: var(--cream); }
+.stats-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.stat { flex: 1; padding: 18px 24px; border-right: 1px solid var(--border); text-align: center; }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); }
+.filters {
+  padding: 16px 40px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.filter-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); margin-right: 4px; }
+.filter-chip {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--cream-muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.filter-chip:hover { border-color: var(--gold-muted); color: var(--cream); }
+.filter-chip.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.08); }
+.posts-container { padding: 32px 40px 60px; }
+.posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.post-card {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  padding: 22px 22px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.post-card:hover { border-color: var(--gold-muted); transform: translateY(-1px); }
+.post-card:hover::before { opacity: 1; }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
+.card-num { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--gold); letter-spacing: 0.1em; opacity: 0.6; flex-shrink: 0; }
+.status-badge { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 10px; flex-shrink: 0; }
+.status-published  { background: rgba(100,180,120,0.15); color: #7ecb97; border: 1px solid rgba(100,180,120,0.25); }
+.status-draft      { background: rgba(201,169,110,0.12); color: var(--gold); border: 1px solid var(--gold-muted); }
+.status-planned    { background: rgba(120,160,220,0.12); color: #a0bcde; border: 1px solid rgba(120,160,220,0.2); }
+.status-idea       { background: rgba(255,255,255,0.05); color: var(--cream-muted); border: 1px solid rgba(255,255,255,0.08); }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--cream); line-height: 1.3; margin-bottom: 8px; }
+.card-hook { font-size: 12px; color: var(--cream-muted); line-height: 1.6; font-style: italic; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 12px; }
+.card-category { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
+.card-date { font-size: 11px; color: var(--cream-muted); opacity: 0.6; margin-left: auto; }
+.card-stats { display: flex; gap: 12px; margin-top: 10px; }
+.card-stat-item { font-size: 11px; color: var(--cream-muted); display: flex; align-items: center; gap: 4px; }
+.card-stat-item span { color: var(--gold); font-weight: 500; }
+.empty-state { grid-column: 1/-1; padding: 60px 24px; text-align: center; color: var(--cream-muted); }
+.empty-state p { font-size: 13px; opacity: 0.5; }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8,14,22,0.88);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+  animation: modalIn 0.2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.modal-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); }
+.modal-close { background: none; border: none; color: var(--cream-muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; transition: color 0.15s; }
+.modal-close:hover { color: var(--cream); }
+.form-row { margin-bottom: 18px; }
+.form-label { display: block; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 6px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold-muted); }
+.form-select option { background: var(--navy); }
+.form-textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+.btn-danger { border-color: rgba(200,80,80,0.3); color: #e08080; }
+.btn-danger:hover { background: rgba(200,80,80,0.15); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-name">Ana Jiménez</div>
+    <div class="brand-sub">Content Studio — LinkedIn Tracker</div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-primary" onclick="openModal()">+ New Post</button>
+  </div>
+</header>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="filters">
+  <span class="filter-label">Filter</span>
+  <button class="filter-chip active" data-filter="all" onclick="setFilter('all', this)">All</button>
+  <button class="filter-chip" data-filter="Published" onclick="setFilter('Published', this)">Published</button>
+  <button class="filter-chip" data-filter="Draft" onclick="setFilter('Draft', this)">Draft</button>
+  <button class="filter-chip" data-filter="Planned" onclick="setFilter('Planned', this)">Planned</button>
+  <button class="filter-chip" data-filter="Idea" onclick="setFilter('Idea', this)">Ideas</button>
+</div>
+
+<div class="posts-container">
+  <div class="posts-grid" id="postsGrid"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">New Post</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Topic / Angle</label>
+      <input class="form-input" id="f-topic" placeholder="What's this post about?" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Hook — first line</label>
+      <input class="form-input" id="f-hook" placeholder="The opening line..." />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="f-category">
+        <option value="">— choose —</option>
+        <option>Build in Public</option>
+        <option>Personal Narrative</option>
+        <option>Achievement Spotlight</option>
+        <option>Hospitality Tech</option>
+        <option>AI / No-Code</option>
+        <option>Account Management</option>
+        <option>Industry Insight</option>
+      </select>
+    </div>
+    <div class="form-row-2">
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Status</label>
+        <select class="form-select" id="f-status">
+          <option>Idea</option>
+          <option>Planned</option>
+          <option>Draft</option>
+          <option>Published</option>
+        </select>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Scheduled / Published</label>
+        <input class="form-input" id="f-date" type="date" />
+      </div>
+    </div>
+    <div style="margin-top:18px"></div>
+    <div class="form-row-3">
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Likes</label>
+        <input class="form-input" id="f-likes" type="number" placeholder="0" min="0" />
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Comments</label>
+        <input class="form-input" id="f-comments" type="number" placeholder="0" min="0" />
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Reposts</label>
+        <input class="form-input" id="f-reposts" type="number" placeholder="0" min="0" />
+      </div>
+    </div>
+    <div class="form-row" style="margin-top:18px">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="f-notes" placeholder="Learnings, ideas for next time..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteBtn" onclick="deletePost()" style="display:none; margin-right:auto">Delete</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePost()">Save Post</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'ana_linkedin_posts';
+let posts = [];
+let editingId = null;
+let activeFilter = 'all';
+
+const SEED = [
+  { id: 1, topic: "I automated my job search twice", hook: "I automated my job search twice.", category: "Build in Public", status: "Published", date: "2026-05-22", likes: 0, comments: 0, reposts: 0, notes: "Make.com + Gemini vs Flask + Claude. Option A storytelling version." },
+  { id: 2, topic: "Tracker live + the scraping wall story", hook: "Last week I said the next version of JobMatch would have pipeline tracking...", category: "Build in Public", status: "Published", date: "2026-05-29", likes: 0, comments: 0, reposts: 0, notes: "Follow-up to post 1. LinkedIn & Indeed blocked scraping — manual step is the point." },
+  { id: 3, topic: "ATS score panel update", hook: "TBD — write once feature is live", category: "Build in Public", status: "Planned", date: "", likes: 0, comments: 0, reposts: 0, notes: "Next up. Feature in progress." },
+  { id: 4, topic: "Transition story — slow build, not a lightning bolt", hook: "There wasn't a single moment. It was more of a slow feeling that kept getting louder.", category: "Personal Narrative", status: "Draft", date: "", likes: 0, comments: 0, reposts: 0, notes: "" },
+  { id: 5, topic: "Hotels paying for tools they barely use", hook: "Most hotels are paying for tools they barely use.", category: "Hospitality Tech", status: "Draft", date: "", likes: 0, comments: 0, reposts: 0, notes: "750 hours saved, zero extra cost angle." },
+  { id: 6, topic: "Built my own content tool without being a developer", hook: "The barrier to building things has dropped. The barrier to knowing what to build hasn't.", category: "AI / No-Code", status: "Draft", date: "", likes: 0, comments: 0, reposts: 0, notes: "" },
+  { id: 7, topic: "Opera Cloud migration / leading a team of 18", hook: "TBD", category: "Achievement Spotlight", status: "Idea", date: "", likes: 0, comments: 0, reposts: 0, notes: "Full migration, team of 18, Microsoft €1M moment." },
+  { id: 8, topic: "What hospitality taught me about customer success", hook: "TBD", category: "Industry Insight", status: "Idea", date: "", likes: 0, comments: 0, reposts: 0, notes: "Ops, relationships, zero margin for error." },
+  { id: 9, topic: "NotiFlow / EmPushy — building CS from scratch at a startup", hook: "TBD", category: "Personal Narrative", status: "Idea", date: "", likes: 0, comments: 0, reposts: 0, notes: "" },
+  { id: 10, topic: "Diageo / Teeling event — client success in live events", hook: "TBD", category: "Account Management", status: "Idea", date: "", likes: 0, comments: 0, reposts: 0, notes: "PowerPlay card, room inventory re-engineering." },
+];
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    posts = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(SEED));
+  } catch { posts = JSON.parse(JSON.stringify(SEED)); }
+  render();
+}
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); } catch {}
+}
+
+function nextId() { return posts.length ? Math.max(...posts.map(p => p.id)) + 1 : 1; }
+
+function setFilter(val, el) {
+  activeFilter = val;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function statusClass(s) {
+  if (s === 'Published') return 'status-published';
+  if (s === 'Draft')     return 'status-draft';
+  if (s === 'Planned')   return 'status-planned';
+  return 'status-idea';
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  try { return new Date(d + 'T00:00:00').toLocaleDateString('en-IE', { day:'numeric', month:'short', year:'numeric' }); }
+  catch { return d; }
+}
+
+function renderStats() {
+  const total     = posts.length;
+  const published = posts.filter(p => p.status === 'Published').length;
+  const likes     = posts.reduce((a, p) => a + (parseInt(p.likes) || 0), 0);
+  const comments  = posts.reduce((a, p) => a + (parseInt(p.comments) || 0), 0);
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Total Posts</div></div>
+    <div class="stat"><div class="stat-num">${published}</div><div class="stat-label">Published</div></div>
+    <div class="stat"><div class="stat-num">${likes}</div><div class="stat-label">Total Likes</div></div>
+    <div class="stat"><div class="stat-num">${comments}</div><div class="stat-label">Total Comments</div></div>
+  `;
+}
+
+function render() {
+  renderStats();
+  const filtered = activeFilter === 'all' ? posts : posts.filter(p => p.status === activeFilter);
+  const grid = document.getElementById('postsGrid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><p>No posts in this category yet.</p></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="post-card" onclick="openModal(${p.id})">
+      <div class="card-top">
+        <div class="card-num">#${String(p.id).padStart(2,'0')}</div>
+        <div class="status-badge ${statusClass(p.status)}">${p.status}</div>
+      </div>
+      <div class="card-title">${p.topic || 'Untitled'}</div>
+      ${p.hook && p.hook !== 'TBD' ? `<div class="card-hook">${p.hook}</div>` : ''}
+      <div class="card-meta">
+        ${p.category ? `<div class="card-category">${p.category}</div>` : ''}
+        ${p.date ? `<div class="card-date">${fmtDate(p.date)}</div>` : ''}
+      </div>
+      ${(p.likes || p.comments || p.reposts) ? `
+      <div class="card-stats">
+        ${p.likes    ? `<div class="card-stat-item">♥ <span>${p.likes}</span></div>` : ''}
+        ${p.comments ? `<div class="card-stat-item">💬 <span>${p.comments}</span></div>` : ''}
+        ${p.reposts  ? `<div class="card-stat-item">↺ <span>${p.reposts}</span></div>` : ''}
+      </div>` : ''}
+    </div>
+  `).join('');
+}
+
+function openModal(id) {
+  editingId = id || null;
+  const overlay = document.getElementById('modalOverlay');
+  const deleteBtn = document.getElementById('deleteBtn');
+  if (id) {
+    const p = posts.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('modalTitle').textContent = `Edit Post #${String(id).padStart(2,'0')}`;
+    document.getElementById('f-topic').value    = p.topic    || '';
+    document.getElementById('f-hook').value     = p.hook !== 'TBD' ? (p.hook || '') : '';
+    document.getElementById('f-category').value = p.category || '';
+    document.getElementById('f-status').value   = p.status   || 'Idea';
+    document.getElementById('f-date').value     = p.date     || '';
+    document.getElementById('f-likes').value    = p.likes    || '';
+    document.getElementById('f-comments').value = p.comments || '';
+    document.getElementById('f-reposts').value  = p.reposts  || '';
+    document.getElementById('f-notes').value    = p.notes    || '';
+    deleteBtn.style.display = 'block';
+  } else {
+    document.getElementById('modalTitle').textContent = 'New Post';
+    ['f-topic','f-hook','f-category','f-date','f-notes'].forEach(id => document.getElementById(id).value = '');
+    ['f-likes','f-comments','f-reposts'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-status').value = 'Idea';
+    deleteBtn.style.display = 'none';
+  }
+  overlay.classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  editingId = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function savePost() {
+  const topic = document.getElementById('f-topic').value.trim();
+  if (!topic) { document.getElementById('f-topic').focus(); return; }
+  const data = {
+    topic,
+    hook:     document.getElementById('f-hook').value.trim()     || 'TBD',
+    category: document.getElementById('f-category').value        || '',
+    status:   document.getElementById('f-status').value          || 'Idea',
+    date:     document.getElementById('f-date').value            || '',
+    likes:    parseInt(document.getElementById('f-likes').value)    || 0,
+    comments: parseInt(document.getElementById('f-comments').value) || 0,
+    reposts:  parseInt(document.getElementById('f-reposts').value)  || 0,
+    notes:    document.getElementById('f-notes').value.trim()    || '',
+  };
+  if (editingId) {
+    const idx = posts.findIndex(p => p.id === editingId);
+    if (idx > -1) posts[idx] = { ...posts[idx], ...data };
+  } else {
+    posts.push({ id: nextId(), ...data });
+  }
+  save();
+  closeModal();
+  render();
+}
+
+function deletePost() {
+  if (!editingId) return;
+  if (!confirm('Delete this post entry?')) return;
+  posts = posts.filter(p => p.id !== editingId);
+  save();
+  closeModal();
+  render();
+}
+
+load();
+</script>
+</body>
+</html>
